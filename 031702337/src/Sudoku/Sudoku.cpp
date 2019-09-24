@@ -5,6 +5,7 @@
 #include<iostream>
 #include<fstream>
 #include<string.h>
+#include<math.h>
 using namespace std;
 int mark[10][10][10] = { 0 };
 int n_size = 0;
@@ -29,12 +30,13 @@ void single() {
 			if (n_size == 4 || n_size == 6 || n_size == 8 || n_size == 9)//判断宫 
 			{
 				if (n_size == 4 || n_size == 9) {
-					int k1 = i / sqrt(n_size);
-					int k2 = j / sqrt(n_size);
-					k1 *= sqrt(n_size);
-					k2 *= sqrt(n_size);
-					for (int k = k1; k < k1 + sqrt(n_size); k++)
-						for (int l = k2; l < k2 + sqrt(n_size); l++)
+					int n = (int)sqrt(n_size);
+					int k1 = i / n;
+					int k2 = j / n;
+					k1 *= n;
+					k2 *= n;
+					for (int k = k1; k < k1 + n; k++)
+						for (int l = k2; l < k2 + n; l++)
 							if (sudo[k][l] && !sgle[i][j][sudo[k][l]]) {
 								count++;
 								sgle[i][j][sudo[k][l]] = 1;
@@ -88,12 +90,13 @@ bool search(int x, int y)//查找当前位置可能存在的解
 	}
 	if (n_size == 4 || n_size == 6 || n_size == 8 || n_size == 9) {
 		if (n_size == 4 || n_size == 9) {
-			int k1 = x / sqrt(n_size);
-			int k2 = y / sqrt(n_size);
-			k1 *= sqrt(n_size);
-			k2 *= sqrt(n_size);
-			for (int i = k1; i < k1 + sqrt(n_size); i++)
-				for (int j = k2; j < k2 + sqrt(n_size); j++) {
+			int n = (int)sqrt(n_size);
+			int k1 = x / n;
+			int k2 = y / n;
+			k1 *= n;
+			k2 *= n;
+			for (int i = k1; i < k1 + n; i++)
+				for (int j = k2; j < k2 + n; j++) {
 					mark[x][y][sudo[i][j]] = 1;
 				}
 		}
@@ -170,7 +173,7 @@ void sudoku(int x, int y, char*o) //深度优先搜索，数独求解函数
 }
 int main(int argc, char*argv[]) {
 	FILE *fp;
-	char *file_path, *output;
+	char *file_path = { "./" }, *output = { "./" };
 	for (int i = 0; i < argc; i++)//读取命令行参数（这里借鉴了李承泽同学的方法）
 	{
 		if (strlen(argv[i]) == 1)
@@ -192,7 +195,7 @@ int main(int argc, char*argv[]) {
 	{
 		for (int i = 0; i < n_size; i++) {
 			for (int j = 0; j < n_size; j++)
-				fscanf(fp, "%d", &sudo[i][j]);
+				fscanf_s(fp, "%d", &sudo[i][j]);
 		}
 		cout << endl;
 		single();//判断初始盘面中存在的唯一解
@@ -208,3 +211,4 @@ int main(int argc, char*argv[]) {
 	}
 	return 0;
 }
+
