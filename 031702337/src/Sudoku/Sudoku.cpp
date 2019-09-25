@@ -188,7 +188,7 @@ int main(int argc, char*argv[]) {
 		if (i == 8)
 			output = argv[i];
 	}
-	fp = fopen(file_path, "r");
+	fopen_s(&fp,file_path, "r");
 	if (fp == NULL)
 		return -1;
 	for (int t = 1; t <= times; t++)//¶ÁÈëÅÌÃæ
